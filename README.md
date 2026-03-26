@@ -6,9 +6,9 @@
 
   **Hồ sơ trình duyệt cá nhân cho Windows**
   
-  [![Status](https://img.shields.io/badge/Status-In_Development-orange?style=flat-square)]()
   [![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat-square)]()
   [![License](https://img.shields.io/badge/License-Freeware-green?style=flat-square)](LICENSE)
+  [![Type](https://img.shields.io/badge/Type-Portable%20App-orange?style=flat-square)]()
 
   <br>
 
