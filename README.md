@@ -41,7 +41,7 @@
 **Hướng dẫn:**
 1. Tải file `Offline-Browser-Profile.zip` về máy.
 2. Giải nén file ra máy.
-3. Đặt folder cùng file exe ở bất cứ đâu bạn muốn và chạy file `.exe` để bắt đầu sử dụng.
+3. Đặt folder ở bất cứ đâu bạn muốn và chạy file `.exe` để bắt đầu sử dụng.
 
 > *Lưu ý: Cần cài đặt Chrome hoặc có sẵn browser chạy nhân chromium.*
 
