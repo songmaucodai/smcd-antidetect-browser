@@ -12,7 +12,7 @@
         :root {
             --bg-color: #0f172a;
             --text-color: #f8fafc;
-            --accent-color: #f59e0b; /* Màu Cam Vàng đặc trưng của AntiDetect */
+            --accent-color: #0ea5e9;
             --secondary-text: #94a3b8;
             --card-bg: rgba(255, 255, 255, 0.03);
             --border-color: rgba(255, 255, 255, 0.1);
@@ -21,7 +21,7 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: linear-gradient(to bottom, #0f172a, #1e293b);
+            background-image: linear-gradient(to bottom, #0f172a, #172554);
             color: var(--text-color);
             margin: 0;
             min-height: 100vh;
@@ -31,7 +31,7 @@
             padding: 40px 20px;
         }
 
-        /* --- LOGO & HEADER --- */
+        /* HEADER */
         .header-section {
             text-align: center;
             margin-bottom: 40px;
@@ -42,7 +42,7 @@
             width: 120px;
             height: 120px;
             object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.2));
+            filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.3));
             margin-bottom: 20px;
         }
 
@@ -50,7 +50,7 @@
             font-size: 2.5rem;
             margin: 0 0 10px 0;
             font-weight: 800;
-            background: linear-gradient(to right, #fff, #cbd5e1);
+            background: linear-gradient(to right, #fff, #bfdbfe);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -61,10 +61,10 @@
             font-weight: 400;
         }
 
-        /* --- CỬA SỔ ỨNG DỤNG (WINDOW FRAME STYLE) --- */
+        /* WINDOW FRAME */
         .window-frame {
             width: 100%;
-            max-width: 750px; /* Kích thước chuẩn đẹp */
+            max-width: 750px;
             background: #1e293b;
             border-radius: 12px;
             overflow: hidden;
@@ -83,11 +83,7 @@
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
         .dot.red { background: #ef4444; }
         .dot.yellow { background: #f59e0b; }
         .dot.green { background: #22c55e; }
@@ -101,18 +97,16 @@
             background-color: #0f172a;
         }
 
-        /* Ảnh thật */
         .app-screenshot {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        /* Placeholder khi chưa có ảnh */
         .placeholder-image {
             width: 100%;
             aspect-ratio: 16/9;
-            display: flex;
+            display: flex; 
             align-items: center;
             justify-content: center;
             flex-direction: column;
@@ -126,11 +120,12 @@
             color: var(--secondary-text);
         }
 
-        /* --- DESCRIPTION --- */
+        /* FEATURES */
         .features-section {
             max-width: 700px;
             text-align: left;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
+            width: 100%;
         }
 
         .features-section h2 {
@@ -150,7 +145,7 @@
             list-style: none;
             padding: 0;
             display: grid;
-            gap: 10px;
+            gap: 12px;
         }
 
         .feature-list li {
@@ -250,7 +245,7 @@
             line-height: 1.2;
         }
 
-        /* Footer */
+        /* FOOTER */
         .footer-nav {
             margin-top: auto;
             display: flex;
@@ -310,7 +305,7 @@
 
     <div class="requirements-box">
         <span class="req-text">
-            Cần cài đặt Chrome hoặc có sẵn browser chạy nhân chromium.
+             Cần cài đặt Chrome hoặc có sẵn browser chạy nhân chromium.
         </span>
     </div>
 
@@ -319,15 +314,16 @@
             Phiên bản mới nhất trên GitHub Releases
         </span>
         
-        <a href="https://github.com/songmaucodai/offline-browser-profile/releases/latest/download/Offline-Browser-Profile.zip" class="btn-download">
-            <i class="fa-brands fa-github"></i>
+        <a href="https://github.com/songmaucodai/offline-browser-profile/releases/latest/download/Offline-Browser-Profile.zip" class="btn-download">
+            <i class="fa-brands fa-github"></i>
             Tải xuống ngay (ZIP)
-        </a>
-        
-        <p class="note">
-            <i class="fa-brands fa-windows"></i> Hỗ trợ: Windows 10 / 11
-        </p>
-    </div>
+        </a>
+
+        <p class="note">
+            <i class="fa-brands fa-windows"></i> Hỗ trợ: Windows 10 / 11
+        </p>
+    </div>
+
 
     <div class="footer-nav">
         <a href="https://songmaucodai.github.io"><i class="fa-solid fa-arrow-left"></i> Về trang chủ</a>
