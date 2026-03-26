@@ -4,7 +4,7 @@
 
   # Offline Browser Profile
 
-  **Hồ sơ trình duyệt cá nhân cho Windows**
+  **Công cụ quản lý hồ sơ trình duyệt ngoại tuyến**
   
   [![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat-square)]()
   [![License](https://img.shields.io/badge/License-Freeware-green?style=flat-square)](LICENSE)
