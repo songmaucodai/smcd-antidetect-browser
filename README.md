@@ -12,7 +12,7 @@
 
   <br>
 
-  [Xem Trang Giới Thiệu Chi Tiết](https://songmaucodai.github.io/smcd-antidetect-browser/)
+  [Xem Trang Giới Thiệu Chi Tiết](https://songmaucodai.github.io/offline-browser-profile/)
 
 </div>
 
