@@ -1,56 +1,40 @@
-<div align="center">
+# [Multi Profile - UI Demo](https://github.songmaucodai.com/multi-profile/)
 
-  <img src="Logo-app.png" alt="Offline Browser Profile Logo" width="120" height="120">
-
-  # Offline Browser Profile
-
-  **Công cụ quản lý hồ sơ trình duyệt ngoại tuyến**
-  
-  [![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat-square)]()
-  [![License](https://img.shields.io/badge/License-Freeware-green?style=flat-square)](LICENSE)
-  [![Type](https://img.shields.io/badge/Type-Portable%20App-orange?style=flat-square)]()
-
-  <br>
-
-  [Xem Trang Giới Thiệu Chi Tiết](https://songmaucodai.github.io/offline-browser-profile/)
-
-</div>
-
----
+![License](https://img.shields.io/badge/license-Free-green.svg)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
 ## Giới thiệu
 
-**Offline Browser Profile** được phát triển cho nhu cầu cá nhân, giúp bạn quản lý nhiều profile trình duyệt trên máy.
+Demo giao diện UI cho ứng dụng **Multi Profile** - Tạo & quản lý profile trình duyệt.
 
-### Điểm nổi bật
+> **Lưu ý**: Đây chỉ là UI demo, không phải ứng dụng thực.
 
-* **Offline Mode:** Dữ liệu lưu trữ cục bộ (Local) trên máy tính của bạn.
-* **Privacy First:** Không gửi dữ liệu về Server, đảm bảo riêng tư tuyệt đối.
-* **Unlimited Profiles:** Quản lý số lượng profile không giới hạn.
+## Về Multi Profile
 
-## ⚙️ Yêu cầu hệ thống
+Tạo và quản lý nhiều hồ sơ trình duyệt độc lập ngay trên máy tính cá nhân, tối ưu cho nhu cầu làm việc riêng tư.
 
-* **Hệ điều hành:** Windows 10 / 11
+**Tính năng:**
+- Dữ liệu lưu trữ cục bộ (Local)
+- Không gửi dữ liệu về Server, đảm bảo riêng tư tuyệt đối
+- Quản lý Profile không giới hạn (tùy thuộc cấu hình máy)
 
-## Tải xuống & Cài đặt
+## Demo bao gồm
 
-Đây là phần mềm dạng **Single File** (Chỉ duy nhất 1 file EXE, chạy ngay không cần cài đặt).
+- Dashboard quản lý danh sách Profile
+- Giao diện Tạo/Sửa Profile (General, Proxy, WebRTC)
+- Dialog cài đặt & menu ngữ cảnh
+- Code preview cho developers
 
-<a href="https://github.com/songmaucodai/offline-browser-profile/releases/latest/download/Offline-Browser-Profile.zip"><strong>Tải xuống ngay (ZIP)</strong></a>
+## License
 
-**Hướng dẫn:**
-1. Tải file `Offline-Browser-Profile.zip` về máy.
-2. Giải nén file ra máy.
-3. Đặt folder ở bất cứ đâu bạn muốn và chạy file `.exe` để bắt đầu sử dụng.
+Copyright (c) 2025 - 2026 songmaucodai
 
-> *Lưu ý: Cần cài đặt Chrome hoặc có sẵn browser chạy nhân chromium.*
+Miễn phí cho mục đích **cá nhân và phi thương mại**. Không được bán, chỉnh sửa hoặc phân phối lại.
 
-## Bản quyền
-
-Dự án này được phát hành dưới dạng **Freeware** (Phần mềm miễn phí).
-Xem chi tiết các điều khoản sử dụng trong file [LICENSE](LICENSE).
+Xem chi tiết đầy đủ tại [LICENSE](LICENSE) file.
 
 ---
-<div align="center">
-  Copyright (c) 2025 - 2026 Songmaucodai
-</div>
+
+Made with ❤️ by songmaucodai
