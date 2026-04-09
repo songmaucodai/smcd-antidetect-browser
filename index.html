@@ -3,339 +3,614 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline Browser Profile - Công cụ quản lý hồ sơ trình duyệt ngoại tuyến</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-
+    <title>Multi Profile - Simulator</title>
+    <link rel="icon" href="https://songmaucodai.com/favicon.ico" type="image/x-icon">
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --text-color: #f8fafc;
-            --accent-color: #0ea5e9;
-            --secondary-text: #94a3b8;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border-color: rgba(255, 255, 255, 0.1);
-        }
+        /* ================= BỘ KHUNG SIMULATOR ================= */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+        
+        body, html { margin: 0; padding: 0; height: 100vh; background: #0f1015; display: flex; flex-direction: column; font-family: 'Inter', sans-serif; overflow: hidden; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #363746; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4c4f6b; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            background-image: linear-gradient(to bottom, #0f172a, #172554);
-            color: var(--text-color);
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-        }
+        #showcase-top { flex: 1; display: flex; align-items: center; justify-content: center; background-color: #0b0c10; background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 20px 20px; position: relative; overflow: hidden; }
+        
+        .back-to-github { position: absolute; left: 10px; display: inline-flex; align-items: center; gap: 10px; padding: 3px 18px; color: #8b949e; text-decoration: none; font-family: inherit; font-size: 12px; transition: all 0.2s ease; z-index: 100; }
+        .back-to-github:hover { color: #c9d1d9; }
+        .back-to-github svg { transition: transform 0.2s ease; }
+        .back-to-github:hover .icon-arrow { transform: translateX(-4px); }
 
-        /* HEADER */
-        .header-section {
-            text-align: center;
-            margin-bottom: 40px;
-            animation: fadeIn 1s ease-out;
-        }
+        .app-window { width: 1024px; height: 650px; background: #191a23; box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1); border-radius: 0; position: absolute; display: flex; flex-direction: column; transform-origin: center center; transition: transform 0.1s ease-out; overflow: hidden; }
+        .app-title-bar { height: 32px; background: #000; flex-shrink: 0; display: flex; align-items: center; padding: 0 12px; color: #ccc; font-size: 12px; font-family: 'Segoe UI', Tahoma, sans-serif; border-bottom: 1px solid #222; z-index: 9999; }
+        .app-title-bar img { width: 16px; height: 16px; margin-right: 8px; border-radius: 3px; }
+        .app-title-bar .window-controls { margin-left: auto; display: flex; align-items: center; gap: 15px; color: #888; cursor: pointer; }
+        .window-controls span:last-child { cursor: pointer; padding: 2px 8px; border-radius: 2px; transition: background-color 0.2s ease; }
+        .window-controls span:last-child:hover { background-color: #e81123; color: #fff;}
 
-        .project-logo {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.3));
-            margin-bottom: 20px;
-        }
+        #showcase-bottom { height: 120px; flex-shrink: 0; background: #1e1e24; border-top: 2px solid #111; display: flex; flex-direction: column; box-shadow: 0 -10px 20px rgba(0,0,0,0.4); z-index: 10; }
+        .code-header { background: #282c34; padding: 8px 20px; border-bottom: 1px solid #111; display: flex; align-items: center; justify-content: space-between; }
+        .code-title { color: #61afef; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        .code-badge { background: #98c379; color: #282c34; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+        .code-content { flex: 1; padding: 10px 20px; overflow-y: auto; font-family: 'Fira Code', monospace; font-size: 12px; line-height: 1.4; color: #abb2bf; }
+        pre { margin: 0; white-space: pre-wrap; transition: opacity 0.2s ease; }
+        .keyword { color: #c678dd; } .function { color: #61afef; } .string { color: #98c379; } .comment { color: #5c6370; font-style: italic; }
 
-        h1 {
-            font-size: 2.5rem;
-            margin: 0 0 10px 0;
-            font-weight: 800;
-            background: linear-gradient(to right, #fff, #bfdbfe);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        /* ================= APP MULTI PROFILE CSS ================= */
+        :root{--bg:#191a23;--panel:#1e1f2b;--line:#4c4f6b;--rowHover:#191a23;--menuBg:#2c2d3d;--menuHover:#4c4f6b;--addHover:#262736;--text:rgba(235,238,248,.92);--muted:rgba(235,238,248,.45);--teal:#18c7b6;--tealFg:rgba(24,199,182,.95);--red:#ff4d4d;--redFg:rgba(255,77,77,.95);--hover:rgba(255,255,255,.03);--r-panel:10px;--r-menu:4px;--r-btn:8px;}
+        *{box-sizing:border-box}
+        
+        .frame{display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;font-size:14px;font-weight:400;flex:1;min-height:0;position:relative;}
+        .hidden{display:none !important}
+        
+        .btn{height:32px;padding:0 10px;border-radius:var(--r-btn);border:1px solid transparent;background:transparent;color:var(--text);cursor:pointer;user-select:none;font-size:13px;font-weight:400;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+        .btn:hover{color:rgba(235,238,248,1)}
+        .btn.add{border:none;background:transparent;padding:0 10px;font-size:14.2px;font-weight:400;color:var(--muted)}
+        .btn.add:hover{background:var(--addHover);border-radius:var(--r-btn);color:rgba(235,238,248,.95)}
+        .btn.uplist{border-radius:var(--r-btn);background:var(--addHover);padding:0 10px;font-size:14.2px;font-weight:400;color:rgba(235,238,248,.95)}
+        .btn-del-all{height:28px !important;margin-left:10px;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:15px;font-size:13px;font-weight:400;cursor:pointer;padding:0 12px;display:inline-flex;align-items:center;justify-content:center} 
+        .btn-del-all:hover{background:var(--addHover);color:rgba(235,238,248,.95)}
+        
+        .top{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:var(--bg);flex-shrink:0;}
+        .top-left,.top-right{display:flex;align-items:center;gap:12px}
+        
+        .ico-menu{width:28px;height:28px;display:block;fill:none;stroke:currentColor;stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+        .btn.back{display:flex;align-items:center;gap:10px;padding:0 10px;height:32px}
+        .ico-back{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+        
+        .main{flex:1;padding:0 16px 16px;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;min-height:0}
+        .table-wrap{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-panel);box-shadow:var(--shadow);overflow:auto;flex:1;display:flex;flex-direction:column}
+        
+        .tbl{width:100%;border-collapse:separate;border-spacing:0;background:var(--panel)}
+        .tbl thead th{text-align:left;padding:12px 12px;background:var(--panel);color:var(--muted);font-size:14.2px;font-weight:400;position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line)}
+        .tbl tbody td{padding:12px 12px;background:var(--panel);border-bottom:1px solid var(--line);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .tbl tbody tr:hover td{background:var(--rowHover)}
+        .tbl tbody tr.is-checked > td{background:var(--rowHover) !important}
+        
+        .col-check{width:40px;text-align:center}
+        .tbl thead th.col-check{width:40px;min-width:40px;max-width:40px;text-align:center;padding:12px 0;box-sizing:border-box}
+        .tbl tbody td:first-child{width:40px;min-width:40px;max-width:40px;padding:0;text-align:center;box-sizing:border-box}
+        
+        .col-notes{width:auto} .col-name{width:316px} .col-state{width:160px} .col-proxy{width:320px}
+        
+        .chk-wrap{display:inline-flex;align-items:center;justify-content:center;padding:4px;cursor:pointer;user-select:none;min-width:22px;min-height:22px;box-sizing:border-box}
+        .chk{-webkit-appearance:none;appearance:none;width:14px;height:14px;min-width:14px;min-height:14px;border:2px solid var(--line);border-radius:3px;background:transparent;display:grid;place-content:center;cursor:pointer;outline:none;box-sizing:border-box;flex-shrink:0}
+        .chk::before{content:"";width:7px;height:4px;border-left:2px solid var(--tealFg);border-bottom:2px solid var(--tealFg);transform:rotate(-45deg) scale(0);transform-origin:center;transition:transform 110ms ease;margin-top:-1px}
+        .chk:hover{border-color:rgba(235,238,248,.65)}
+        .chk:checked{border-color:rgba(24,199,182,.35);background:transparent}
+        .chk:checked::before{transform:rotate(-45deg) scale(1)}
+        
+        .name{font-size:13.5px;font-weight:400;color:var(--text)}
+        .proxy{font-size:13.5px;font-weight:400;color:rgba(235,238,248,.88)}
+        .state{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:400;color:var(--text)}
+        .ring{width:9px;height:9px;border-radius:999px;border:1.5px solid rgba(235,238,248,.55);background:transparent}
+        .state.ready .ring{border-color:rgba(235,238,248,.5)}
+        .state.running .ring{border-color:rgba(24,199,182,.95)}
+        .state.running .label{color:rgba(24,199,182,.95)}
+        
+        .actions{display:flex;align-items:center;gap:8px}
+        .a-btn{height:24px;padding:0 11px;border-radius:4px;border:1px solid transparent;background:transparent;font-size:12px;font-weight:400;cursor:pointer;user-select:none;display:inline-flex !important;align-items:center;justify-content:center;min-width:50px}
+        .a-btn.teal{color:var(--tealFg);border-color:rgba(24,199,182,.35);background:transparent}
+        .a-btn.teal:hover{background:rgba(24,199,182,.9);color:#071012;border-color:rgba(24,199,182,.9)}
+        .a-btn.red{color:var(--redFg);border-color:rgba(255,77,77,.35);background:transparent}
+        .a-btn.red:hover{background:rgba(255,77,77,.92);color:#120707;border-color:rgba(255,77,77,.92)}
+        
+        .name-cell{display:flex;align-items:center;justify-content:space-between;gap:12px}
+        .name-left{min-width:0}
+        .name-left .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .name-actions{flex:0 0 auto}
+        
+        /* CSS Inline Edit Notes */
+        .notes{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text); cursor:pointer;}
+        .notes.editing { padding: 0; }
+        .note-input { width: 100%; height: 20px; background: transparent; border: none; color: var(--text); font: inherit; outline: none; padding: 0; margin: 0; }
+        .note-add { color: var(--tealFg); user-select: none; cursor:pointer;}
+        .note-add:hover { opacity: 0.85; }
 
-        .subtitle {
-            font-size: 1.1rem;
-            color: var(--secondary-text);
-            font-weight: 400;
-        }
+        .kebab{height:22px;width:28px;display:flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid transparent;background:transparent;color:rgba(235,238,248,.25);cursor:pointer;font-size:16px;line-height:1;user-select:none}
+        .kebab:hover{background:transparent;border-color:transparent;color:rgba(235,238,248,.92)}
+        .kebab-ico{position:relative;width:18px;height:4px;display:block;color:inherit}
+        .kebab-ico::before{content:"";position:absolute;top:50%;left:50%;width:3.5px;height:3.5px;border-radius:50%;background:currentColor;transform:translate(-50%,-50%);box-shadow:-6px 0 0 currentColor,6px 0 0 currentColor;opacity:.95}
+        
+        /* Ẩn hiện Kebab, Checkbox và Add Note */
+        .tbl tbody .chk-wrap, .tbl tbody .kebab, .tbl tbody .note-add { opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+        .tbl tbody tr:hover .chk-wrap, .tbl tbody tr:hover .kebab, .tbl tbody tr:hover .note-add, .tbl tbody tr.is-checked .chk-wrap { opacity: 1; pointer-events: auto; }
+        
+        .tbl thead th.col-check .chk{visibility:hidden;transition:none}
+        .tbl thead th.col-check .chk-wrap:hover .chk{visibility:visible}
+        .tbl thead #chkAll:checked{visibility:visible}
+        
+        .menu-float{position:absolute;width:140px;border-radius:var(--r-menu);border:1px solid rgba(235,238,248,.1);background:var(--menuBg);padding:4px;box-shadow:0 18px 45px rgba(0,0,0,.45);overflow:hidden;display:none;z-index:9999}
+        .menu-float.open{display:block}
+        .menu-item{display:flex;align-items:center;gap:10px;margin:0;padding:7px 10px;border-radius:4px;color:rgba(235,238,248,.88);font-size:14.2px;font-weight:400;cursor:pointer;user-select:none}
+        .menu-item:hover{background:var(--menuHover)}
+        .menu-sep{height:1px;margin:5px 2px;background:rgba(255,255,255,.1)}
+        
+        .dlg-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45);z-index:20000}
+        .dlg-overlay.open{display:flex}
+        .dlg{width:360px;max-width:calc(100vw - 60px);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-btn);box-shadow:var(--shadow);overflow:hidden}
+        .dlg-head{display:flex;align-items:center;justify-content:space-between;padding:14px 23px;border-bottom:1px solid var(--line)}
+        .dlg-title{font-size:14.8px;font-weight:500;color:var(--text);flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .dlg-x{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid transparent;background:transparent;color:rgba(235,238,248,.55);cursor:pointer;padding:0;font-size:16px;}
+        .dlg-x:hover{background:transparent;color:rgba(235,238,248,.92)}
+        .dlg-foot{display:flex;justify-content:flex-end;gap:10px;padding:22px}
+        .dlg-btn{min-width:68px;height:32px;border-radius:var(--r-menu);border:1px solid var(--line);background:transparent;color:var(--text);font-size:13px;font-weight:400;cursor:pointer}
+        .dlg-btn.cancel:hover{background:var(--addHover)}
+        .dlg-btn.danger{border-color:rgba(255,77,77,.75);background:rgba(255,77,77,.75);color:rgba(0,0,0,.85)}
+        .dlg-btn.danger:hover{border-color:var(--redFg);background:var(--redFg)}
 
-        /* WINDOW FRAME */
-        .window-frame {
-            width: 100%;
-            max-width: 750px;
-            background: #1e293b;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .window-header {
-            background: #334155;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot.red { background: #ef4444; }
-        .dot.yellow { background: #f59e0b; }
-        .dot.green { background: #22c55e; }
-
-        .image-container {
-            position: relative;
-            min-height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #0f172a;
-        }
-
-        .app-screenshot {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .placeholder-image {
-            width: 100%;
-            aspect-ratio: 16/9;
-            display: flex; 
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            background: repeating-linear-gradient(
-                45deg,
-                rgba(255,255,255,0.03),
-                rgba(255,255,255,0.03) 10px,
-                rgba(255,255,255,0.05) 10px,
-                rgba(255,255,255,0.05) 20px
-            );
-            color: var(--secondary-text);
-        }
-
-        /* FEATURES */
-        .features-section {
-            max-width: 700px;
-            text-align: left;
-            margin-bottom: 40px;
-            width: 100%;
-        }
-
-        .features-section h2 {
-            font-size: 1.5rem;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 15px;
-            margin-bottom: 20px;
-        }
-
-        .features-section p {
-            line-height: 1.7;
-            color: #cbd5e1;
-            margin-bottom: 15px;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-            display: grid;
-            gap: 12px;
-        }
-
-        .feature-list li {
-            padding-left: 25px;
-            position: relative;
-            color: var(--secondary-text);
-        }
-
-        .feature-list li::before {
-            content: "\f00c";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: var(--accent-color);
-        }
-
-        /* REQUIREMENTS - ĐÃ BỎ ICON & CĂN GIỮA HOÀN TOÀN */
-        .requirements-box {
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid var(--accent-color);
-            border-radius: 8px;
-            
-            /* Padding chuẩn, không cần chừa chỗ cho icon nữa */
-            padding: 15px 20px;
-            
-            margin-bottom: 40px;
-            color: #e0f2fe;
-            
-            /* Căn giữa nội dung */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            
-            max-width: 700px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .requirements-box .req-text {
-            /* Style font chữ cũ của bạn */
-            font-size: 0.9em;
-            opacity: 0.8;
-            line-height: 1.5;
-        }
-
-        /* DOWNLOAD BOX - GIỮ NGUYÊN */
-        .download-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 40px;
-            
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 35px 30px; 
-            gap: 25px; 
-        }
-
-        .download-box span.version-text {
-            color: var(--secondary-text);
-            margin: 0;
-            line-height: 1.2;
-        }
-
-        .btn-download {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 1rem;
-            background: var(--accent-color);
-            color: #fff;
-            box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
-            margin: 0;
-        }
-
-        .btn-download:hover {
-            transform: translateY(-2px);
-            background: #38bdf8;
-        }
-
-        .note {
-            font-size: 0.8rem;
-            color: var(--secondary-text);
-            margin: 0;
-            line-height: 1.2;
-        }
-
-        /* FOOTER */
-        .footer-nav {
-            margin-top: auto;
-            display: flex;
-            gap: 20px;
-        }
-        .footer-nav a {
-            color: var(--secondary-text);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .footer-nav a:hover {
-            color: #fff;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        #settingsView, #editView { display: flex; }
+        .settings-shell{width:100%;border:1px solid var(--line);border-radius:var(--r-panel);background:var(--panel);overflow:hidden;display:flex;flex:1;min-height:100%;}
+        .settings-side{width:250px;border-right:1px solid var(--line);padding:18px 14px}
+        .side-item{width:100%;text-align:left;border:1px solid transparent;background:transparent;color:var(--text);padding:10px 10px;border-radius:8px;cursor:pointer}
+        .side-item:hover{background:rgba(255,255,255,.03)}
+        .side-item.active{color:var(--tealFg);border-color:rgba(24,199,182,.22);background:rgba(24,199,182,.06)}
+        .settings-main{flex:1;padding:18px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;}
+        .settings-head{padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:16px;width:100%;}
+        .settings-title{font-size:22px;font-weight:650;color:var(--text);}
+        .settings-sub{margin-top:6px;color:var(--muted);font-size:13.5px;}
+        
+        .edit-shell{width:100%;border:1px solid var(--line);border-radius:var(--r-panel);background:var(--panel);overflow:hidden;box-shadow:var(--shadow);padding:18px 18px 18px;display:flex;flex-direction:column;flex:1;min-height:100%;}
+        .edit-head{padding:6px 2px 10px}
+        .edit-title{font-size:26px;font-weight:750;color:var(--text);}
+        .edit-tabs{display:flex;gap:26px;padding:10px 2px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+        .ep-tab{position:relative;padding:12px 0;border:none;background:transparent;color:rgba(235,238,248,.65);font-size:14.5px;cursor:pointer}
+        .ep-tab.active{color:var(--tealFg)}
+        .ep-tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:rgba(24,199,182,.95);border-radius:2px}
+        
+        .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--menuBg);border:1px solid rgba(235,238,248,.1);border-radius:999px;padding:9px 12px;font-size:13px;font-weight:400;opacity:0;pointer-events:none;transition:opacity .18s ease,transform .18s ease;z-index:99999;}
+        .toast.show{opacity:1;transform:translateX(-50%) translateY(-3px)}
     </style>
 </head>
 <body>
 
-    <div class="header-section">
-        <img src="Logo-app.png" alt="SMCD AntiDetect Browser Logo" class="project-logo">
-        <h1>Offline Browser Profile</h1>
-        <p class="subtitle">Công cụ quản lý hồ sơ trình duyệt ngoại tuyến</p>
-    </div>
+    <div id="showcase-top">
+        <a href="https://github.com/songmaucodai" class="back-to-github" target="_blank">
+            <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <svg class="icon-github" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            <span>GitHub Profile</span>
+        </a>
 
-    <div class="window-frame">
-        <div class="window-header">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-        </div>
-        
-        <div class="image-container">
-            <img src="screenshot.png" alt="Giao diện phần mềm" class="app-screenshot" id="real-image" onerror="showFallback()">
-            
-            <div class="placeholder-image" id="fallback-box" style="display: none;">
-                <i class="fa-solid fa-image" style="font-size: 40px; margin-bottom: 15px; opacity: 0.5;"></i>
-                <span>Giao diện phần mềm sẽ được cập nhật sớm</span>
+        <div class="app-window" id="appWindow" onclick="closeAllMenus()">
+            <div class="app-title-bar">
+                <img src="https://songmaucodai.com/multi-profile/Logo-app.png" alt="icon">
+                <span>Multi Profile</span>
+                <div class="window-controls">
+                    <span>─</span><span>□</span><span onclick="window.location.href='https://github.com/songmaucodai/multi-profile'">✕</span>
+                </div>
+            </div>
+
+            <div class="frame">
+                <div class="menu-float" id="ctxMenu" onmouseenter="cancelHideMenu()" onmouseleave="hideMenu()">
+                    <div class="menu-item" onclick="clickEdit()"><span>Edit</span></div>
+                    <div class="menu-sep"></div>
+                    <div class="menu-item" onclick="clickDelete()"><span>Delete</span></div>
+                </div>
+
+                <div class="menu-float" id="topMenuFloat">
+                    <div class="menu-item" onclick="clickTopMenu('settings')"><span>Settings</span></div>
+                    <div class="menu-item" onclick="clickTopMenu('about')"><span>About</span></div>
+                </div>
+
+                <div class="dlg-overlay" id="dlgOverlay" onclick="closeDeleteDlg()">
+                    <div class="dlg" onclick="event.stopPropagation()">
+                        <div class="dlg-head">
+                            <div class="dlg-title" id="dlgTitle">Delete profile</div>
+                            <button class="dlg-x" onclick="closeDeleteDlg()">✕</button>
+                        </div>
+                        <div class="dlg-foot">
+                            <button class="dlg-btn cancel" onclick="closeDeleteDlg()">Cancel</button>
+                            <button class="dlg-btn danger" onclick="confirmDelete()">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                <header class="top">
+                    <div class="top-left" id="topProfilesLeft">
+                        <button class="btn uplist" id="btnRefresh" onclick="backend.refresh()">Update the list</button>
+                        <button class="btn btn-del-all hidden" id="btnDeleteAll" onclick="clickDeleteAll()">Delete All</button>
+                    </div>
+                    <div class="top-left hidden" id="topSettingsLeft">
+                        <button class="btn back" id="btnBack" onclick="switchView('profilesView', 'switchView(\\\'profilesView\\\');')">
+                            <svg class="ico-back" viewBox="0 0 24 24"><polyline points="15 6 9 12 15 18"></polyline></svg><span>Back</span>
+                        </button>
+                    </div>
+                    <div class="top-right">
+                        <button class="btn add" id="btnAdd" onclick="openCreateProfile()">
+                            <span>Add profile</span>
+                        </button>
+                        <button class="btn add" id="btnMenu" onclick="toggleTopMenu(event)">
+                            <svg class="ico-menu" viewBox="0 0 24 24"><line x1="6" y1="7" x2="18" y2="7"></line><line x1="6" y1="12" x2="18" y2="12"></line><line x1="6" y1="17" x2="18" y2="17"></line></svg>
+                        </button>
+                    </div>
+                </header>
+
+                <main class="main" id="profilesView">
+                    <div class="table-wrap">
+                        <table class="tbl">
+                            <thead>
+                                <tr>
+                                    <th class="col-check"><label class="chk-wrap" style="opacity: 1; pointer-events: auto;"><input class="chk" id="chkAll" type="checkbox"></label></th>
+                                    <th class="col-name">Name</th><th class="col-state">State</th><th class="col-notes">Notes</th><th class="col-proxy">Proxy</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody"></tbody>
+                        </table>
+                    </div>
+                </main>
+
+                <main class="main hidden" id="settingsView">
+                    <div class="settings-shell">
+                        <aside class="settings-side">
+                            <div style="color:var(--muted);font-size:12px;margin-bottom:10px;">Menu</div>
+                            <button class="side-item active" id="navSettings" onclick="switchSettingsTab('settings')">Settings</button>
+                            <button class="side-item" id="navAbout" onclick="switchSettingsTab('about')">About</button>
+                        </aside>
+                        <section class="settings-main">
+                            <div id="pageSettings" style="width: 100%;">
+                                <div class="settings-head">
+                                    <div class="settings-title">Settings UI Demo</div>
+                                    <div class="settings-sub">Giao diện giả lập, không có tác dụng thật.</div>
+                                </div>
+                            </div>
+                            <div id="pageAbout" class="hidden" style="width: 100%;">
+                                <div class="settings-head">
+                                    <div class="settings-title">About UI Demo</div>
+                                    <div class="settings-sub">Giao diện giả lập, không có tác dụng thật.</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+
+                <main class="main hidden" id="editView">
+                    <div class="edit-shell">
+                        <div class="edit-head">
+                            <div class="edit-title" id="editViewTitle">Create Profile UI Demo</div>
+                        </div>
+                        <div class="edit-tabs">
+                            <button class="ep-tab active" data-tab="general" onclick="switchEditTab('general')">General</button>
+                            <button class="ep-tab" data-tab="proxy" onclick="switchEditTab('proxy')">Proxy</button>
+                            <button class="ep-tab" data-tab="webrtc" onclick="switchEditTab('webrtc')">WebRTC</button>
+                        </div>
+                        <div style="flex:1; display:flex; align-items:center; justify-content:center; text-align:center; flex-direction:column;">
+                            <p style="color:#888; font-size:13px; margin:0;">Giao diện giả lập, không có tác dụng thật.</p>
+                        </div>
+                    </div>
+                </main>
+
+                <div id="toast" class="toast">Action completed!</div>
             </div>
         </div>
     </div>
 
-    <div class="features-section">
-        <h2>Giới thiệu</h2>
-        <p>
-            Offline Browser Profile được phát triển cho nhu cầu cá nhân, giúp bạn quản lý nhiều profile trình duyệt trên máy.
-        </p>
-        <ul class="feature-list">
-            <li>Dữ liệu lưu trữ cục bộ (Local) trên máy tính của bạn.</li>
-            <li>Không gửi dữ liệu về Server, đảm bảo riêng tư tuyệt đối.</li>
-            <li>Quản lý Profile không giới hạn (tùy thuộc cấu hình máy).</li>
-        </ul>
-    </div>
-
-    <div class="requirements-box">
-        <span class="req-text">
-             Cần cài đặt Chrome hoặc có sẵn browser chạy nhân chromium.
-        </span>
-    </div>
-
-    <div class="download-box">
-        <span class="version-text">
-            Phiên bản mới nhất trên GitHub Releases
-        </span>
-        
-        <a href="https://github.com/songmaucodai/offline-browser-profile/releases/latest/download/Offline-Browser-Profile.zip" class="btn-download">
-            <i class="fa-brands fa-github"></i>
-            Tải xuống ngay (ZIP)
-        </a>
-
-        <p class="note">
-            <i class="fa-brands fa-windows"></i> Hỗ trợ: Windows 10 / 11
-        </p>
-    </div>
-
-
-    <div class="footer-nav">
-        <a href="https://songmaucodai.github.io"><i class="fa-solid fa-arrow-left"></i> Về trang chủ</a>
-        <a href="https://github.com/songmaucodai/offline-browser-profile" target="_blank"><i class="fa-brands fa-github"></i> GitHub Project</a>
+    <div id="showcase-bottom">
+        <div class="code-header">
+            <span class="code-title" id="codeTitle">Sẵn sàng</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="code-badge">JS</span>
+                <a href="https://songmaucodai.com/multi-profile/" target="_blank" style="color: #888; display: flex; align-items: center; transition: color 0.2s;" onmouseover="this.style.color='#61afef'" onmouseout="this.style.color='#888'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+        </div>
+        <div class="code-content" id="codeContentBox">
+            <pre id="codeDisplay"><span class="comment">// Hãy tương tác với giao diện bên trên (Click Checkbox, Menu Kebab, Create Profile...)</span>
+<span class="comment">// Javascript mô phỏng sẽ hiển thị tại đây.</span></pre>
+        </div>
     </div>
 
     <script>
-        function showFallback() {
-            document.getElementById('real-image').style.display = 'none';
-            document.getElementById('fallback-box').style.display = 'flex';
+        function resizeAppSimulator() {
+            const container = document.getElementById('showcase-top');
+            const app = document.getElementById('appWindow');
+            const availableWidth = container.clientWidth - 40; 
+            const availableHeight = container.clientHeight - 40;
+            const scale = Math.min(availableWidth / 1024, availableHeight / 650, 1);
+            
+            app.style.transform = `scale(${scale})`;
+            
+            const profileBtn = document.querySelector('.back-to-github');
+            profileBtn.style.top = `calc(50% - ${(650 * scale) / 2}px)`;
         }
-    </script>
+        window.addEventListener('resize', resizeAppSimulator);
+        resizeAppSimulator();
 
+        function renderCode(title, codeString) {
+            document.getElementById('codeTitle').innerText = title;
+            const display = document.getElementById('codeDisplay');
+            let formatted = codeString
+                .replace(/function/g, '<span class="keyword">function</span>')
+                .replace(/const |let |var /g, '<span class="keyword">$&</span>')
+                .replace(/document\.getElementById/g, '<span class="function">document.getElementById</span>'); 
+
+            display.style.opacity = '0';
+            setTimeout(() => {
+                display.innerHTML = formatted;
+                display.style.opacity = '1';
+                document.getElementById('codeContentBox').scrollTop = 0;
+            }, 50);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function switchView(viewId, actionName) {
+            ['profilesView', 'settingsView', 'editView'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(viewId).classList.remove('hidden');
+            
+            document.getElementById('topProfilesLeft').classList.toggle('hidden', viewId !== 'profilesView');
+            document.getElementById('topSettingsLeft').classList.toggle('hidden', viewId === 'profilesView');
+
+            if(actionName) renderCode('Navigate', actionName);
+        }
+
+        function switchSettingsTab(tab) {
+            document.getElementById('navSettings').classList.remove('active');
+            document.getElementById('navAbout').classList.remove('active');
+            document.getElementById('pageSettings').classList.add('hidden');
+            document.getElementById('pageAbout').classList.add('hidden');
+            
+            document.getElementById(tab === 'settings' ? 'navSettings' : 'navAbout').classList.add('active');
+            document.getElementById(tab === 'settings' ? 'pageSettings' : 'pageAbout').classList.remove('hidden');
+            renderCode('Settings Tab', "setSettingsPage('" + tab + "');");
+        }
+
+        function switchEditTab(tab) {
+            document.querySelectorAll('.ep-tab').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.ep-tab[data-tab="${tab}"]`).classList.add('active');
+            renderCode('Edit Tab', "setEditTab('" + tab + "');");
+        }
+
+        function openCreateProfile() {
+            document.getElementById('editViewTitle').innerText = 'Create Profile UI Demo';
+            switchView('editView', "openCreateProfile();");
+        }
+
+        function toggleTopMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('topMenuFloat');
+            const btn = document.getElementById('btnMenu');
+            const frame = document.querySelector('.frame');
+            
+            if (menu.classList.contains('open')) {
+                menu.classList.remove('open');
+                return;
+            }
+            
+            document.getElementById('ctxMenu').classList.remove('open');
+            menu.classList.add('open');
+            
+            const btnRect = btn.getBoundingClientRect();
+            const frameRect = frame.getBoundingClientRect();
+            const scale = frameRect.width / frame.offsetWidth;
+            
+            const top = (btnRect.bottom - frameRect.top) / scale;
+            const left = (btnRect.right - frameRect.left) / scale;
+
+            menu.style.top = (top + 6) + 'px';
+            menu.style.left = (left - 130) + 'px';
+            
+            renderCode('Open Menu', "toggleTopMenu();");
+        }
+
+        function clickTopMenu(tab) {
+            document.getElementById('topMenuFloat').classList.remove('open');
+            switchView('settingsView');
+            switchSettingsTab(tab);
+        }
+
+        let menuTimer;
+        let activeProfile = null;
+
+        function showMenu(e, id, name) {
+            cancelHideMenu();
+            activeProfile = { id, name };
+            const menu = document.getElementById('ctxMenu');
+            document.getElementById('topMenuFloat').classList.remove('open');
+            menu.classList.add('open');
+            
+            const kebabBtn = e.target.closest('.kebab');
+            const frame = document.querySelector('.frame');
+            const frameRect = frame.getBoundingClientRect();
+            const btnRect = kebabBtn.getBoundingClientRect();
+            const scale = frameRect.width / frame.offsetWidth;
+            
+            const top = (btnRect.bottom - frameRect.top) / scale;
+            const left = (btnRect.right - frameRect.left) / scale;
+
+            menu.style.top = (top + 4) + 'px';
+            menu.style.left = (left - 140) + 'px';
+            
+            renderCode('Menu Open', "showMenu('" + id + "', '" + name + "');");
+        }
+
+        function hideMenu() {
+            menuTimer = setTimeout(() => {
+                document.getElementById('ctxMenu').classList.remove('open');
+            }, 150);
+        }
+
+        function cancelHideMenu() { clearTimeout(menuTimer); }
+        
+        function closeAllMenus() {
+            document.getElementById('ctxMenu').classList.remove('open');
+            document.getElementById('topMenuFloat').classList.remove('open');
+        }
+
+        function clickEdit() {
+            if(!activeProfile) return;
+            hideMenu();
+            document.getElementById('editViewTitle').innerText = 'Edit Profile UI Demo';
+            switchView('editView', "openEditProfile('" + activeProfile.id + "');");
+        }
+
+        let isBulkDelete = false;
+
+        function clickDeleteAll() {
+            isBulkDelete = true;
+            document.getElementById('dlgTitle').innerText = 'Delete all selected profiles. Are you sure?';
+            document.getElementById('dlgOverlay').classList.add('open');
+            renderCode('Delete All Confirm', "openDeleteDlg({ isBulk: true });");
+        }
+
+        function clickDelete() {
+            if(!activeProfile) return;
+            isBulkDelete = false;
+            hideMenu();
+            document.getElementById('dlgTitle').innerText = 'Delete profile: ' + activeProfile.name;
+            document.getElementById('dlgOverlay').classList.add('open');
+            renderCode('Delete Confirm', "openDeleteDlg('" + activeProfile.id + "');");
+        }
+
+        function closeDeleteDlg() {
+            document.getElementById('dlgOverlay').classList.remove('open');
+        }
+
+        function confirmDelete() {
+            closeDeleteDlg();
+            if(isBulkDelete) {
+                const checkedBoxes = document.querySelectorAll('#tbody .chk:checked');
+                const idsToDelete = Array.from(checkedBoxes).map(cb => cb.dataset.id);
+                mockDb = mockDb.filter(p => !idsToDelete.includes(p.id));
+                backend.refresh();
+                updateDeleteAllBtn();
+                showToast('Profiles deleted!');
+                renderCode('Bulk Delete Executed', "backend.deleteProfiles(idsToDelete);");
+            } else {
+                if(!activeProfile) return;
+                mockDb = mockDb.filter(p => p.id !== activeProfile.id);
+                backend.refresh();
+                updateDeleteAllBtn();
+                showToast('Profile deleted!');
+                renderCode('Delete Executed', "backend.deleteProfile('" + activeProfile.id + "');");
+            }
+        }
+
+        function updateDeleteAllBtn() {
+            const checkedCount = document.querySelectorAll('#tbody .chk:checked').length;
+            const btn = document.getElementById('btnDeleteAll');
+            if(btn) {
+                if(checkedCount >= 2) btn.classList.remove('hidden');
+                else btn.classList.add('hidden');
+            }
+        }
+
+        document.getElementById('chkAll').addEventListener('change', function(e) {
+            const isChecked = e.target.checked;
+            document.querySelectorAll('#tbody .chk').forEach(cb => {
+                cb.checked = isChecked;
+                cb.closest('tr').classList.toggle('is-checked', isChecked);
+            });
+            updateDeleteAllBtn();
+            renderCode('Select All', "setAllRowCheckboxesDOM(" + isChecked + ");");
+        });
+
+        // Inline Edit Note Logic
+        function clickNote(noteBox, id) {
+            if(noteBox.classList.contains("editing")) return;
+            
+            const p = mockDb.find(x => x.id === id);
+            const current = p.notes || "";
+            
+            noteBox.classList.add("editing");
+            noteBox.innerHTML = '<input class="note-input" type="text" spellcheck="false">';
+            const inp = noteBox.querySelector(".note-input");
+            inp.value = current;
+            inp.focus();
+
+            renderCode('Edit Note', "startEditNote('" + id + "');");
+
+            let done = false;
+            const commit = () => {
+                if(done) return;
+                done = true;
+                const val = inp.value;
+                p.notes = val;
+                noteBox.classList.remove("editing");
+                if(val.trim()) {
+                    noteBox.textContent = val;
+                } else {
+                    noteBox.innerHTML = '<span class="note-add">Add note</span>';
+                }
+                renderCode('Save Note', "backend.setNote('" + id + "', '" + val + "');");
+            };
+
+            inp.addEventListener("keydown", (e) => {
+                if(e.key === "Enter") { e.preventDefault(); inp.blur(); }
+                if(e.key === "Escape") { 
+                    e.preventDefault(); 
+                    done = true; 
+                    noteBox.classList.remove("editing"); 
+                    noteBox.innerHTML = current ? current : '<span class="note-add">Add note</span>'; 
+                }
+            });
+            inp.addEventListener("blur", commit);
+        }
+
+        let mockDb = [
+            { id: "1", name: "New Profile 01", status: "ready", notes: "Test", proxy: "192.168.1.5:8080 [AUTH]" },
+            { id: "2", name: "New Profile 02", status: "ready", notes: "", proxy: "" },
+            { id: "3", name: "New Profile 03", status: "ready", notes: "", proxy: "" }
+        ];
+
+        const backend = {
+            refresh: function() {
+                const tbody = document.getElementById("tbody"); tbody.innerHTML = "";
+                mockDb.forEach(p => {
+                    const stHtml = p.status === 'running' 
+                        ? `<div class="state running"><span class="ring"></span><span class="label">running</span></div>` 
+                        : `<div class="state ready"><span class="ring"></span><span class="label">ready</span></div>`;
+                    
+                    const btnHtml = p.status === 'running'
+                        ? `<button class="a-btn teal" onclick="backend.viewProfile('${p.id}')">View</button><button class="a-btn red" onclick="backend.stopProfile('${p.id}')">Stop</button>`
+                        : `<button class="a-btn teal" onclick="backend.startProfile('${p.id}')">Run</button>`;
+                    
+                    const kebabHtml = `<button class="kebab" onmouseenter="showMenu(event, '${p.id}', '${p.name}')" onmouseleave="hideMenu()"><span class="kebab-ico"></span></button>`;
+
+                    const noteContent = p.notes ? p.notes : '<span class="note-add">Add note</span>';
+                    const noteHtml = `<div class="notes" data-id="${p.id}" onclick="clickNote(this, '${p.id}')">${noteContent}</div>`;
+
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td class="col-check">
+                            <label class="chk-wrap">
+                                <input class="chk" type="checkbox" data-id="${p.id}" onchange="this.closest('tr').classList.toggle('is-checked', this.checked); updateDeleteAllBtn(); renderCode('Row Selection', 'toggleSelection();');">
+                            </label>
+                        </td>
+                        <td class="col-name"><div class="name-cell"><div class="name-left"><div class="name">${p.name}</div></div><div class="name-actions actions">${btnHtml}${kebabHtml}</div></div></td>
+                        <td class="col-state">${stHtml}</td>
+                        <td class="col-notes">${noteHtml}</td>
+                        <td class="col-proxy"><div class="proxy">${p.proxy}</div></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+                document.getElementById('chkAll').checked = false;
+                updateDeleteAllBtn();
+            },
+            startProfile: function(id) {
+                let p = mockDb.find(x => x.id === id); if(p) p.status = "running";
+                this.refresh();
+                renderCode('Run App', "backend.startProfile('" + id + "');");
+            },
+            stopProfile: function(id) {
+                let p = mockDb.find(x => x.id === id); if(p) p.status = "ready";
+                this.refresh();
+                renderCode('Stop App', "backend.stopProfile('" + id + "');");
+            },
+            viewProfile: function(id) {
+                renderCode('View Profile', "backend.viewProfile('" + id + "');");
+            }
+        };
+
+        backend.refresh();
+    </script>
 </body>
 </html>
