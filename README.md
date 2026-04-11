@@ -1,4 +1,4 @@
-# [Multi Profile - UI Demo](https://github.songmaucodai.com/multi-profile/)
+# Multi Profile [UI Demo](https://github.songmaucodai.com/multi-profile/)
 
 ![License](https://img.shields.io/badge/license-Free-green.svg)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
